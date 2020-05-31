@@ -1,6 +1,7 @@
 package ru.mativ.kurentojsonrpcdemo;
 
 import org.kurento.jsonrpc.DefaultJsonRpcHandler;
+import org.kurento.jsonrpc.Session;
 import org.kurento.jsonrpc.Transaction;
 import org.kurento.jsonrpc.message.Request;
 import org.slf4j.Logger;
@@ -14,9 +15,19 @@ public class KurentoJsonrpcDemoHandler extends DefaultJsonRpcHandler<JsonObject>
 	@Override
 	public void handleRequest(Transaction transaction, Request<JsonObject> request) throws Exception {
 
-		log.debug("Request id:" + request.getId());
-		log.debug("Request method:" + request.getMethod());
-		log.debug("Request params:" + request.getParams());
+		Session kurentoSession = transaction.getSession();
+
+		log.debug("[SESSION] SessionId: " + kurentoSession.getSessionId());
+		log.debug("[SESSION] RegisterInfo: " + kurentoSession.getRegisterInfo());
+		log.debug("[SESSION] isNew: " + kurentoSession.isNew());
+		log.debug("[SESSION] Attributes: " + kurentoSession.getAttributes());
+
+		// TODO setReconnectionTimeout
+		// TODO close
+
+		log.debug("[REQUEST] id:" + request.getId());
+		log.debug("[REQUEST] method:" + request.getMethod());
+		log.debug("[REQUEST] params:" + request.getParams());
 
 		transaction.sendResponse(request.getParams());
 
