@@ -19,10 +19,8 @@ public class KurentoJsonrpcDemoApplication implements JsonRpcConfigurer {
 		registry.addHandler(kurentoJsonrpcDemoHandler(), "/jsonrpc");
 
 		/*
-		 * TODO kjrserver.conf.json
-		 * "ws.sessionReconnectionTime", 10
-		 * "ws.maxSessions", Long.MAX_VALUE
-		 * "jsonRpcServerWebSocket.timeout", 10000
+		 * TODO kjrserver.conf.json "ws.sessionReconnectionTime", 10 "ws.maxSessions",
+		 * Long.MAX_VALUE "jsonRpcServerWebSocket.timeout", 10000
 		 */
 	}
 
@@ -30,23 +28,22 @@ public class KurentoJsonrpcDemoApplication implements JsonRpcConfigurer {
 	public JsonRpcHandler<?> kurentoJsonrpcDemoHandler() {
 		KurentoJsonrpcDemoHandler handler = new KurentoJsonrpcDemoHandler();
 
-		handler
-		.withSockJS()
-		.withLabel("DEMO_LABEL")
-		.withAllowedOrigins("*")
-		.withPingWatchdog(true);
+		handler.withAllowedOrigins("*");
+		handler.withLabel("DEMO_LABEL");
+		handler.withPingWatchdog(true);
+		handler.withSockJS();
 
-		// TODO handler.withInterceptors(interceptors)
+//		handler.withInterceptors(new HandshakeInterceptorDemo());
 
 		return handler;
 	}
 
-	  @Bean
-	  public ServletServerContainerFactoryBean createWebSocketContainer() {
-	    ServletServerContainerFactoryBean container = new ServletServerContainerFactoryBean();
-	    container.setMaxSessionIdleTimeout(10000l);
-	    return container;
-	  }
+	@Bean
+	public ServletServerContainerFactoryBean createWebSocketContainer() {
+		ServletServerContainerFactoryBean container = new ServletServerContainerFactoryBean();
+		container.setMaxSessionIdleTimeout(10000l);
+		return container;
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(KurentoJsonrpcDemoApplication.class, args);
