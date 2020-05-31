@@ -16,16 +16,23 @@ public class KurentoJsonrpcDemoApplication implements JsonRpcConfigurer {
 	@Override
 	public void registerJsonRpcHandlers(JsonRpcHandlerRegistry registry) {
 		registry.addHandler(new KurentoJsonrpcDemoHandler(), "/jsonrpc");
+
+		/*
+		 * TODO kjrserver.conf.json "ws.sessionReconnectionTime", 10 "ws.maxSessions",
+		 * Long.MAX_VALUE "jsonRpcServerWebSocket.timeout", 10000
+		 */
 	}
 
 	@Bean
 	public JsonRpcHandler<?> kurentoJsonrpcDemoHandler() {
 		KurentoJsonrpcDemoHandler handler = new KurentoJsonrpcDemoHandler();
 
-		handler.withSockJS();
-		handler.withLabel("DEMO_LABEL");
-		handler.withAllowedOrigins("*");
-		handler.withPingWatchdog(true);
+		handler
+		.withSockJS()
+		.withLabel("DEMO_LABEL")
+		.withAllowedOrigins("*")
+		.withPingWatchdog(true);
+
 		// TODO handler.withInterceptors(interceptors)
 
 		return handler;
