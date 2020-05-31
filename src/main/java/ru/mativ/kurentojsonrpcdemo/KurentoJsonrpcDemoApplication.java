@@ -41,12 +41,12 @@ public class KurentoJsonrpcDemoApplication implements JsonRpcConfigurer {
 		return handler;
 	}
 
-//	  @Bean
-//	  public ServletServerContainerFactoryBean createWebSocketContainer() {
-//	    ServletServerContainerFactoryBean container = new ServletServerContainerFactoryBean();
-//	    container.setMaxSessionIdleTimeout(10000l);
-//	    return container;
-//	  }
+	  @Bean
+	  public ServletServerContainerFactoryBean createWebSocketContainer() {
+	    ServletServerContainerFactoryBean container = new ServletServerContainerFactoryBean();
+	    container.setMaxSessionIdleTimeout(10000l);
+	    return container;
+	  }
 
 	public static void main(String[] args) {
 		SpringApplication.run(KurentoJsonrpcDemoApplication.class, args);

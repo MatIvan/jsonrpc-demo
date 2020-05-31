@@ -4,9 +4,8 @@ var jsonRpcClientWs = null;
 window.onload = function() {
 
 	var configuration = {
-		hearbeat: 1000,			//interval in ms for each heartbeat message. If has any value, the ping-pong will work with the interval
+		heartbeat: 10000,			//interval in ms for each heartbeat message. If has any value, the ping-pong will work with the interval
 		sendCloseMessage: true, //true / false, before closing the connection, it sends a closeSession message
-		uri : 'https://' + location.host + '/jsonrpc',
 		ws: {
 			uri: 'https://' + location.host + '/jsonrpc', 	//URI to conntect to
 			useSockJS: true, 								//true (use SockJS) / false (use WebSocket) by default
@@ -17,14 +16,12 @@ window.onload = function() {
 			onerror: errorCallback							//callback method to invoke when there is an error
 		},
 		rpc: {
-			requestTimeout: 1000, 		//timeout for a request
-			//sessionStatusChanged: 	//callback method for changes in session status,
-			//mediaRenegotiation: 		//mediaRenegotiation
+			requestTimeout: 5000, 		//timeout for a request
+			heartbeatRequestTimeout: 10000,
 		}
 	}
 
 	jsonRpcClientWs = new RpcBuilder.clients.JsonRpcClient(configuration);
-
 };
 
 window.onbeforeunload = function() {

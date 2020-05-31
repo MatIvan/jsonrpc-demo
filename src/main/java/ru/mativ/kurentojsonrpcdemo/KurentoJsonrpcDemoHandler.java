@@ -17,18 +17,38 @@ public class KurentoJsonrpcDemoHandler extends DefaultJsonRpcHandler<JsonObject>
 
 		Session kurentoSession = transaction.getSession();
 
-		log.info("[SESSION] isNew: {}, SessionId: {}", kurentoSession.isNew(), kurentoSession.getSessionId());
-		log.info("[SESSION] RegisterInfo: " + kurentoSession.getRegisterInfo());
-		log.info("[SESSION] Attributes: " + kurentoSession.getAttributes());
+		log.info("========== REQUEST ==========");
+		log.info("[SESSION] isNew: {}", 		kurentoSession.isNew());
+		log.info("[SESSION] SessionId: {}", 	kurentoSession.getSessionId());
+		log.info("[SESSION] RegisterInfo: {}", 	kurentoSession.getRegisterInfo());
+		log.info("[SESSION] Attributes: {}", 	kurentoSession.getAttributes());
 
-		// TODO setReconnectionTimeout
-		// TODO close
-		// TODO transaction.startAsync();
+		log.info("[REQUEST] id: {}", 		request.getId());
+		log.info("[REQUEST] method: {}", 	request.getMethod());
+		log.info("[REQUEST] params: {}", 	request.getParams());
 
-		log.info("[REQUEST] id: {}, method: {}, params: {}", request.getId(), request.getMethod(), request.getParams());
+		// TODO about Transaction methods;
 
 		transaction.sendResponse(request.getParams());
 	}
 
-	// TODO Other overrides methods
+	@Override
+	public void afterConnectionEstablished(Session session) throws Exception {
+		log.info("========== ESTABLISHED ==========");
+		log.info("[SESSION] SessionId: {}", session.getSessionId());
+		session.setReconnectionTimeout(15000);
+	}
+
+	@Override
+	public void afterConnectionClosed(Session session, String status) throws Exception {
+		log.info("========== CLOSED ==========");
+		log.info("[STATUS] {}", status);
+		log.info("[SESSION] SessionId: {}", session.getSessionId());
+	}
+
+	@Override
+	public void afterReconnection(Session session) throws Exception {
+		log.info("========== RECONNECTION ==========");
+		log.info("[SESSION] SessionId: {}", session.getSessionId());
+	}
 }
