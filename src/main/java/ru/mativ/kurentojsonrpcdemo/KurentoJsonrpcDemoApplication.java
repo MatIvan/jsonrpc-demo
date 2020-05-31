@@ -19,8 +19,10 @@ public class KurentoJsonrpcDemoApplication implements JsonRpcConfigurer {
 		registry.addHandler(kurentoJsonrpcDemoHandler(), "/jsonrpc");
 
 		/*
-		 * TODO kjrserver.conf.json "ws.sessionReconnectionTime", 10 "ws.maxSessions",
-		 * Long.MAX_VALUE "jsonRpcServerWebSocket.timeout", 10000
+		 * TODO kjrserver.conf.json
+		 * "ws.sessionReconnectionTime", 10
+		 * "ws.maxSessions", Long.MAX_VALUE
+		 * "jsonRpcServerWebSocket.timeout", 10000
 		 */
 	}
 
@@ -38,7 +40,6 @@ public class KurentoJsonrpcDemoApplication implements JsonRpcConfigurer {
 
 		return handler;
 	}
-	
 
 //	  @Bean
 //	  public ServletServerContainerFactoryBean createWebSocketContainer() {
