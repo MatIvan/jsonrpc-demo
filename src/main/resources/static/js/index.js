@@ -66,4 +66,3 @@ function sendTextMessage(textMsg) {
 		console.log("response:", response);
 	});
 }
-

@@ -43,13 +43,12 @@
 		    <version>6.13.1</version>
 		</dependency>
 		
-				<!-- https://mvnrepository.com/artifact/org.kurento/kurento-jsonrpc-js -->
+		<!-- https://mvnrepository.com/artifact/org.kurento/kurento-jsonrpc-js -->
 		<dependency>
 		    <groupId>org.kurento</groupId>
 		    <artifactId>kurento-jsonrpc-js</artifactId>
 		    <version>6.13.0</version>
 		</dependency>
-	
 	
 		<!-- https://mvnrepository.com/artifact/org.webjars/webjars-locator -->
 		<dependency>
@@ -64,7 +63,6 @@
 		    <artifactId>sockjs-client</artifactId>
 		    <version>1.4.0</version>
 		</dependency>
-		
 		
 	</dependencies>
 
