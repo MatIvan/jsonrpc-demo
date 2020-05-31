@@ -17,19 +17,18 @@ public class KurentoJsonrpcDemoHandler extends DefaultJsonRpcHandler<JsonObject>
 
 		Session kurentoSession = transaction.getSession();
 
-		log.info("[SESSION] SessionId: " + kurentoSession.getSessionId());
+		log.info("[SESSION] isNew: {}, SessionId: {}", kurentoSession.isNew(), kurentoSession.getSessionId());
 		log.info("[SESSION] RegisterInfo: " + kurentoSession.getRegisterInfo());
-		log.info("[SESSION] isNew: " + kurentoSession.isNew());
 		log.info("[SESSION] Attributes: " + kurentoSession.getAttributes());
 
 		// TODO setReconnectionTimeout
 		// TODO close
+		// TODO transaction.startAsync();
 
-		log.info("[REQUEST] id:" + request.getId());
-		log.info("[REQUEST] method:" + request.getMethod());
-		log.info("[REQUEST] params:" + request.getParams());
+		log.info("[REQUEST] id: {}, method: {}, params: {}", request.getId(), request.getMethod(), request.getParams());
 
 		transaction.sendResponse(request.getParams());
-
 	}
+
+	// TODO Other overrides methods
 }

@@ -6,6 +6,7 @@ window.onload = function() {
 	var configuration = {
 		hearbeat: 1000,			//interval in ms for each heartbeat message. If has any value, the ping-pong will work with the interval
 		sendCloseMessage: true, //true / false, before closing the connection, it sends a closeSession message
+		uri : 'https://' + location.host + '/jsonrpc',
 		ws: {
 			uri: 'https://' + location.host + '/jsonrpc', 	//URI to conntect to
 			useSockJS: true, 								//true (use SockJS) / false (use WebSocket) by default
@@ -32,7 +33,6 @@ window.onbeforeunload = function() {
 
 function connectCallback() {
 	console.log("connect");
-	sendTextMessage("hello!")
 }
 
 function disconnectCallback() {
@@ -45,7 +45,6 @@ function reconnectingCallback() {
 
 function reconnectedCallback() {
 	console.log("REconnectED");
-	sendTextMessage("hello Agayn !")
 }
 
 function errorCallback(error) {
@@ -65,4 +64,14 @@ function sendTextMessage(textMsg) {
 		}
 		console.log("response:", response);
 	});
+}
+
+function closeSocket() {
+	console.log("closeSocket");
+	jsonRpcClientWs.close();
+}
+
+function reconnect() {
+	console.log("reconnect");
+	jsonRpcClientWs.reconnect();
 }
