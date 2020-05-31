@@ -35,6 +35,14 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.kurento/kurento-jsonrpc-server -->
+		<dependency>
+		    <groupId>org.kurento</groupId>
+		    <artifactId>kurento-jsonrpc-server</artifactId>
+		    <version>6.13.1</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>
