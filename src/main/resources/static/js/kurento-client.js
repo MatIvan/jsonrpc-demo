@@ -17,7 +17,8 @@ window.onload = function() {
 			onerror: errorCallback							// callback на ошибку
 		},
 		rpc: {
-			requestTimeout: 10000 // время в миллисекундах на отправку запроса. (через какое время придет ошибка, если сервер не доступен)
+			requestTimeout: 10000, // время в миллисекундах на отправку запроса. (через какое время придет ошибка, если сервер не доступен)
+			myOwnMethod: myOwnMethodCall
 		}
 	}
 
@@ -25,12 +26,19 @@ window.onload = function() {
 	jsonRpcClientWs = new RpcBuilder.clients.JsonRpcClient(configuration);
 };
 
+function myOwnMethodCall(params, request){
+    console.log("==== myOwnMethodCall ====");
+    console.log("params: ", params);
+    console.log("request: ", request);
+}
+
 window.onbeforeunload = function() {
 	jsonRpcClientWs.close();
 }
 
 function connectCallback() {
 	console.log("connect");
+	sendConnect();
 }
 
 function disconnectCallback() {
@@ -43,6 +51,7 @@ function reconnectingCallback() {
 
 function reconnectedCallback() {
 	console.log("REconnectED");
+	sendConnect();
 }
 
 function errorCallback(error) {
@@ -73,3 +82,29 @@ function reconnect() {
 	console.log("reconnect");
 	jsonRpcClientWs.reconnect();
 }
+
+var mySessionId;
+function sendConnect(){
+    var method = "connect";
+    var params = {};
+
+    if(mySessionId){
+        params = {
+            sessionId: mySessionId
+        };
+    }
+
+    jsonRpcClientWs.send(method, params, function(error, response) {
+        mySessionId = undefined;
+        if (error) {
+            console.log("error:", error);
+            return;
+        }
+        console.log("response:", response);
+        if (response.value == "OK"){
+            mySessionId = response.sessionId;
+        }
+    });
+
+}
+
