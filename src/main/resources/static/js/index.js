@@ -3,24 +3,25 @@ var jsonRpcClientWs = null;
 
 window.onload = function() {
 
+    // Настройки подключения
 	var configuration = {
-		heartbeat: 10000,			//interval in ms for each heartbeat message. If has any value, the ping-pong will work with the interval
-		sendCloseMessage: true, //true / false, before closing the connection, it sends a closeSession message
+		heartbeat: 10000,		// Время в миллисекундах между ping-pong сообщениями. Если не указать, то пинги будут отключены.
+		sendCloseMessage: true, // true / false посылать сообщение "closeSession" перед отключением или просто оборвать связь. (сервер сразу узнает об отключении или по пингу)
 		ws: {
-			uri: 'https://' + location.host + '/jsonrpc', 	//URI to conntect to
-			useSockJS: true, 								//true (use SockJS) / false (use WebSocket) by default
-			onconnected: connectCallback, 					//callback method to invoke when connection is successful
-			ondisconnect: disconnectCallback,				//callback method to invoke when the connection is lost
-			onreconnecting: reconnectingCallback,			//callback method to invoke when the client is reconnecting
-			onreconnected: reconnectedCallback,				//callback method to invoke when the client succesfully reconnects
-			onerror: errorCallback							//callback method to invoke when there is an error
+			uri: 'https://' + location.host + '/jsonrpc', 	// URI до сервера
+			useSockJS: true, 								// true (использовать SockJS) / false (использовать WebSocket)
+			onconnected: connectCallback, 					// callback на подлючение
+			ondisconnect: disconnectCallback,				// callback на обрыв связи
+			onreconnecting: reconnectingCallback,			// callback на старт повторной попытки подключиться
+			onreconnected: reconnectedCallback,				// callback переподключение удалось
+			onerror: errorCallback							// callback на ошибку
 		},
 		rpc: {
-			requestTimeout: 5000, 		//timeout for a request
-			heartbeatRequestTimeout: 10000,
+			requestTimeout: 10000 // время в миллисекундах на отправку запроса. (через какое время придет ошибка, если сервер не доступен)
 		}
 	}
 
+	// Создание подключения
 	jsonRpcClientWs = new RpcBuilder.clients.JsonRpcClient(configuration);
 };
 
