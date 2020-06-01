@@ -36,7 +36,7 @@ public class KurentoJsonrpcDemoApplication implements JsonRpcConfigurer {
                 .withSockJS()               // Использовать SockJS
                 .withLabel("DEMO_LABEL")    // Метка сокета. Выводится в логах с ошибками.
                 .withAllowedOrigins("*")    // Разрешенные узлы для подключения
-                .withPingWatchdog(false);    // Включить пинги в подключениях
+                .withPingWatchdog(true);    // Включить пинги в подключениях
 
         return handler;
     }
