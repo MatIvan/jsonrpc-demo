@@ -1,5 +1,6 @@
 
-var jsonRpcClientWs = null;
+var jsonRpcClientWs = null; // клиент
+var mySessionId; // id текущей/последней сесии.
 
 window.onload = function() {
 
@@ -17,20 +18,14 @@ window.onload = function() {
 			onerror: errorCallback							// callback на ошибку
 		},
 		rpc: {
-			requestTimeout: 10000, // время в миллисекундах на отправку запроса. (через какое время придет ошибка, если сервер не доступен)
-			myOwnMethod: myOwnMethodCall
+			requestTimeout: 10000,       // время в миллисекундах на отправку запроса. (через какое время придет ошибка, если сервер не доступен)
+			myOwnMethod: myOwnMethodCall // определяем свой метод
 		}
 	}
 
 	// Создание подключения
 	jsonRpcClientWs = new RpcBuilder.clients.JsonRpcClient(configuration);
 };
-
-function myOwnMethodCall(params, request){
-    console.log("==== myOwnMethodCall ====");
-    console.log("params: ", params);
-    console.log("request: ", request);
-}
 
 window.onbeforeunload = function() {
 	jsonRpcClientWs.close();
@@ -58,6 +53,7 @@ function errorCallback(error) {
 	console.log("error: ", error);
 }
 
+// отправить текстовое сообщение на сервер
 function sendTextMessage(textMsg) {
 	var method = "text-message";
 	var params = {
@@ -73,17 +69,21 @@ function sendTextMessage(textMsg) {
 	});
 }
 
+// закрыть соккет
+// вызывается нажатием кнопки на странице
 function closeSocket() {
 	console.log("closeSocket");
 	jsonRpcClientWs.close();
 }
 
+// переподключиться
+// вызывается нажатием кнопки на странице
 function reconnect() {
 	console.log("reconnect");
 	jsonRpcClientWs.reconnect();
 }
 
-var mySessionId;
+// Функция отправляет на севрвер команду подключения с уже имеющимся ИД сессии.
 function sendConnect(){
     var method = "connect";
     var params = {};
@@ -108,3 +108,9 @@ function sendConnect(){
 
 }
 
+// Свой метод.
+function myOwnMethodCall(params, request){
+    console.log("==== myOwnMethodCall ====");
+    console.log("params: ", params);
+    console.log("request: ", request);
+}
